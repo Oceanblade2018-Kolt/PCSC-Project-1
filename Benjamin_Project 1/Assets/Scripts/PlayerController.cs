@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
 
+    CinemachinePositionComposer cineCam;
+    Camera playerCam;
     PlayerInput PlayerInput;
     Rigidbody rb;
     Ray jumpRay;
@@ -24,21 +27,33 @@ public class PlayerController : MonoBehaviour
         //Setting up new move Vector
         moveInput = new Vector2();
         jumpRay = new Ray(transform.position, -transform.up);
+
+        playerCam = Camera.main;
+        cineCam = GameObject.Find("CinemachineCamera").GetComponent<CinemachinePositionComposer>();
+    }
+    private void FixedUpdate()
+    {
+        Quaternion playerRotation = Quaternion.identity;
+        playerRotation.y = playerCam.transform.rotation.y;
+        playerRotation.w = playerCam.transform.rotation.w;
+        transform.rotation = playerRotation;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
 
         Vector3 tempMove = rb.linearVelocity;
 
         //rb.linearVelocity = (moveInput.x * speed) + (moveInput.y * speed) + (moveInput.z * speed);
-        tempMove.x = (moveInput.x * speed) * transform.right.x;
-        tempMove.z = (moveInput.y * speed) * transform.forward.z;
+        tempMove.x = (moveInput.x * speed);
+        tempMove.z = (moveInput.y * speed);
 
-        rb.linearVelocity = tempMove;
+        rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -56,5 +71,8 @@ public class PlayerController : MonoBehaviour
 
         //rb.AddForce(Vector3.up * jumpHeight);
     }
-
+    public void shoulderSwap()
+    {
+        cineCam.TargetOffset.x *= -1;
+    }
 }
