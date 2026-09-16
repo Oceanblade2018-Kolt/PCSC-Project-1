@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
+    //public float lives = 3f;
+    //public float health = 100f;
+    //want to: create a wall jump system using true and false with a varible that is set at start and when wall jump is used and when touch floor
 
     CinemachinePositionComposer cineCam;
     Camera playerCam;
