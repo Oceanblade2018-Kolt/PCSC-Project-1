@@ -4,19 +4,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool isAttacking = false;
+
     public float speed = 5.0f;
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
-    //public float lives = 3f;
-    //public float health = 100f;
-    //want to: create a wall jump system using true and false with a varible that is set at start and when wall jump is used and when touch floor
+    public float interactDistance = 6f;
+
 
     CinemachinePositionComposer cineCam;
     Camera playerCam;
     PlayerInput PlayerInput;
     Rigidbody rb;
-    Ray jumpRay;
 
+    public Weapon currentWeapon;
+    public Transform weaponSlot;
+    public GameObject pickupObject;
+
+    Ray jumpRay;
+    Ray interactRay;
+    RaycastHit interactHit;
     Vector2 moveInput;
 
 
@@ -29,7 +36,11 @@ public class PlayerController : MonoBehaviour
 
         //Setting up new move Vector
         moveInput = new Vector2();
+
         jumpRay = new Ray(transform.position, -transform.up);
+        interactRay = new Ray(playerCam.transform.position, playerCam.transform.forward);
+
+        weaponSlot = transform.GetChild(0);
 
         playerCam = Camera.main;
         cineCam = GameObject.Find("CinemachineCamera").GetComponent<CinemachinePositionComposer>();
@@ -50,13 +61,33 @@ public class PlayerController : MonoBehaviour
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
 
-        Vector3 tempMove = rb.linearVelocity;
+        interactRay.origin = playerCam.transform.position;
+        interactRay.direction = playerCam.transform.forward;
 
-        //rb.linearVelocity = (moveInput.x * speed) + (moveInput.y * speed) + (moveInput.z * speed);
+        if (Physics.Raycast(interactRay, out interactHit, interactDistance))
+        {
+            if (interactHit.collider.tag == "Weapon")
+            {
+                pickupObject = interactHit.collider.gameObject;
+            }
+        }
+        else
+        
+            pickupObject = null;
+
+        if (currentWeapon)
+            if (currentWeapon.holdToAttack && isAttacking)
+                currentWeapon.fire();
+
+            Vector3 tempMove = rb.linearVelocity;
+
         tempMove.x = (moveInput.x * speed);
         tempMove.z = (moveInput.y * speed);
 
         rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
+
+
+
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -78,4 +109,35 @@ public class PlayerController : MonoBehaviour
     {
         cineCam.TargetOffset.x *= -1;
     }
+
+    public void Reload()
+    {
+        if (currentWeapon)
+            if (currentWeapon.reloading)
+                currentWeapon.reload();
+    }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (currentWeapon.holdToAttack)
+        {
+            if (context.ReadValueAsButton())
+                isAttacking = true;
+            else
+                isAttacking = false;
+        }
+        else if (context.ReadValueAsButton())
+            currentWeapon.fire();
+    }
+
+    public void Interact()
+    {
+
+    }
+    public void DropWeapon()
+    {
+
+    }
+
+
 }
