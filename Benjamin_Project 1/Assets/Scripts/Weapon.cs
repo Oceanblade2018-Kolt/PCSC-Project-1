@@ -41,8 +41,10 @@ public class Weapon : MonoBehaviour
 
 
 
-    public void equip()
+    public void equip(PlayerController p)
     {
+        player = p;
+
         player.currentWeapon = this;
 
         transform.SetPositionAndRotation(player.weaponSlot.position, player.weaponSlot.rotation);

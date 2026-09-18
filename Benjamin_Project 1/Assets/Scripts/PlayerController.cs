@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,11 +6,14 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public bool isAttacking = false;
+    public bool takingDamage = false;
 
+    public int health = 5;
     public float speed = 5.0f;
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
+    public float hazardCooldown = 3f;
 
 
     CinemachinePositionComposer cineCam;
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
         //Initializing Component Data
         rb = GetComponent<Rigidbody>();
         PlayerInput = GetComponent<PlayerInput>();
+        playerCam = Camera.main;
 
         //Setting up new move Vector
         moveInput = new Vector2();
@@ -42,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         weaponSlot = transform.GetChild(0);
 
-        playerCam = Camera.main;
+        
         cineCam = GameObject.Find("CinemachineCamera").GetComponent<CinemachinePositionComposer>();
     }
     private void FixedUpdate()
@@ -57,6 +62,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health <= 0)
+        {
+
+        }
+            //die
 
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
@@ -113,31 +123,92 @@ public class PlayerController : MonoBehaviour
     public void Reload()
     {
         if (currentWeapon)
-            if (currentWeapon.reloading)
+            if (!currentWeapon.reloading)
                 currentWeapon.reload();
     }
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (currentWeapon.holdToAttack)
-        {
-            if (context.ReadValueAsButton())
-                isAttacking = true;
-            else
-                isAttacking = false;
-        }
+        if(currentWeapon)
+            if (currentWeapon.holdToAttack)
+            {
+                if (context.ReadValueAsButton())
+                    isAttacking = true;
+                else
+                    isAttacking = false;
+            }
         else if (context.ReadValueAsButton())
             currentWeapon.fire();
     }
 
-    public void Interact()
+    public void Interact(InputAction.CallbackContext context)
     {
+        if (context.ReadValueAsButton())
+        {
+            if (pickupObject)
+            {
+                if (pickupObject.tag == "Weapon")
+                {
+                    pickupObject.GetComponent<Weapon>().equip(this);
+                }
 
+
+            }
+            else if (currentWeapon)
+            {
+                Reload();
+            }
+        }
     }
+
     public void DropWeapon()
     {
+        if (currentWeapon)
+            currentWeapon.unequip();
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Ammo")
+        {
+            if(currentWeapon && currentWeapon.ammo < currentWeapon.maxAmmo)
+            {
+
+                int ammoFill = currentWeapon.maxAmmo - currentWeapon.ammo;
+                if(currentWeapon.maxAmmo - currentWeapon.ammo < currentWeapon.ammoRefill)
+                {
+                    currentWeapon.ammo += ammoFill;
+                }
+                else
+                {
+                    currentWeapon.ammo += currentWeapon.ammoRefill;
+                }
+
+                Destroy(collision.gameObject);
+            }
+        }
+
+        if(collision.gameObject.tag == "Hazard")
+        {
+            health--;
+        }
     }
 
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Hazard")
+        {
+            if(!takingDamage)
+                StartCoroutine("damageCooldown");
+        }
+
+    }
+    IEnumerator damageCooldown()
+    {
+        takingDamage = true;
+        yield return new WaitForSeconds(hazardCooldown);
+        health--;
+        takingDamage = false;
+    }
 }
