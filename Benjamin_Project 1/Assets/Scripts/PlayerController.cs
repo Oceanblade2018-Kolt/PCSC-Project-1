@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     public bool takingDamage = false;
 
     public int health = 5;
+    public int maxHealth = 5;
     public float speed = 5.0f;
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
     public float hazardCooldown = 3f;
-
+    //public float dynamicPhysics;
+    //GetComponent<collider>().PhysicsMaterial.
 
     CinemachinePositionComposer cineCam;
     Camera playerCam;
@@ -25,10 +27,12 @@ public class PlayerController : MonoBehaviour
     public Transform weaponSlot;
     public GameObject pickupObject;
 
+
     Ray jumpRay;
     Ray interactRay;
     RaycastHit interactHit;
     Vector2 moveInput;
+    //PhysicsMaterial phys;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -49,6 +53,13 @@ public class PlayerController : MonoBehaviour
 
         
         cineCam = GameObject.Find("CinemachineCamera").GetComponent<CinemachinePositionComposer>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //phys = GetComponent<Collider>().material;
+
+
     }
     private void FixedUpdate()
     {
@@ -96,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
 
-
+        //GetComponent<Collider>().material.dynamicFriction = 1;
 
     }
 
