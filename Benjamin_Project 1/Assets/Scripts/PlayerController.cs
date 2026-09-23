@@ -5,8 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
+    //convert these to a scriptableobject for easy read and modifications
+
+    //PlayerController player;
     public bool isAttacking = false;
     public bool takingDamage = false;
+    public bool touchedHazardPool = false;
+    public bool touchedBasicEnemy = false;
 
     public int health = 5;
     public int maxHealth = 5;
@@ -14,7 +20,12 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
-    public float hazardCooldown = 3f;
+
+    //public float interactDistanceDown = 6f;
+
+    public float hazardPoolCooldown = 3f;
+    public float basicEnemyCooldown = 3f;
+
     //public float dynamicPhysics;
     //GetComponent<collider>().PhysicsMaterial.
 
@@ -30,6 +41,10 @@ public class PlayerController : MonoBehaviour
 
     Ray jumpRay;
     Ray interactRay;
+
+    //Ray interactRayDown;
+    //RaycastHit interactHitDown;
+
     RaycastHit interactHit;
     Vector2 moveInput;
     //PhysicsMaterial phys;
@@ -85,6 +100,10 @@ public class PlayerController : MonoBehaviour
         interactRay.origin = playerCam.transform.position;
         interactRay.direction = playerCam.transform.forward;
 
+
+        //interactRayDown.origin = playerCam.transform.position;
+        //interactRayDown.direction = player.transform.up;
+
         if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
             if (interactHit.collider.tag == "Weapon")
@@ -95,6 +114,19 @@ public class PlayerController : MonoBehaviour
         else
         
             pickupObject = null;
+
+        /*
+        if (Physics.Raycast(interactRayDown, out interactHitDown, interactDistanceDown))
+        {
+            if (interactHitDown.collider.tag == "Weapon")
+            {
+                pickupObject = interactHitDown.collider.gameObject;
+            }
+        }
+        else
+
+            pickupObject = null;
+        */
 
         if (currentWeapon)
             if (currentWeapon.holdToAttack && isAttacking)
@@ -214,12 +246,28 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("damageCooldown");
         }
 
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (!takingDamage)
+                StartCoroutine("enemyCooldown");
+        }
     }
     IEnumerator damageCooldown()
     {
         takingDamage = true;
-        yield return new WaitForSeconds(hazardCooldown);
+        yield return new WaitForSeconds(hazardPoolCooldown);
         health--;
         takingDamage = false;
     }
+
+    
+    IEnumerator enemyCooldown()
+    {
+        takingDamage = true;
+        yield return new WaitForSeconds(basicEnemyCooldown);
+        health--;
+        takingDamage = false;
+        //make damage a variable in both enemy and enemy data
+    }
+    
 }
