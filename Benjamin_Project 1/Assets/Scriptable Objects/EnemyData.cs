@@ -4,11 +4,13 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     //Enemy
-    public int health = 3;
-    public int maxHealth = 3;
+    [Header("Enemy Stats")]
+    //public int health = 3;
+    //public int maxHealth = 3;
     public float detectionRange = 5;
 
     //NavMeshAgent
+    [Header("NavMeshAgent Stats")]
     public float speed = 3.5f;
     public float acceleration = 8f;
     public float angularSpeed = 120f;

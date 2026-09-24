@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [SerializeField] private EnemyData data;
     //convert these to a scriptableobject for easy read and modifications
 
     //PlayerController player;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     //public float interactDistanceDown = 6f;
 
     public float hazardPoolCooldown = 3f;
-    public float basicEnemyCooldown = 3f;
+    public float basicEnemyCooldown = 0.5f;
 
     //public float dynamicPhysics;
     //GetComponent<collider>().PhysicsMaterial.
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
     {
         takingDamage = true;
         yield return new WaitForSeconds(basicEnemyCooldown);
-        health--;
+        health -= (int)2;
         takingDamage = false;
         //make damage a variable in both enemy and enemy data
     }
