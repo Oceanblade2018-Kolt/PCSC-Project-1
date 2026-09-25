@@ -37,12 +37,12 @@ public class Enemy : MonoBehaviour
      
     void Update()
     {
-        //if (health <= 0)
-        //{
-        //    //DIE
-        //    Destroy(gameObject);
+        if (health <= 0)
+        {
+            //DIE
+            Destroy(gameObject);
 
-        //}
+        }
 
 
 
@@ -59,10 +59,10 @@ public class Enemy : MonoBehaviour
 
          
 
-        if (Vector3.Distance(gameObject.transform.position, player.transform.position) < 14.0f)
-        {
-            print("This is working I think");
-        }
+        //if (Vector3.Distance(gameObject.transform.position, player.transform.position) < 14.0f)
+        //{
+        //    print("This is working I think");
+        //}
 
 
 
@@ -79,14 +79,14 @@ public class Enemy : MonoBehaviour
         agent.height = data.height;
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "projectile")
-    //    {
-    //        health--;
-    //    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "projectile")
+        {
+            health--;
+        }
 
-    //}
+    }
 
 
 

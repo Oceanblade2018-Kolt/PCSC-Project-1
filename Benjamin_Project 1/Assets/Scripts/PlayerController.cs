@@ -269,5 +269,4 @@ public class PlayerController : MonoBehaviour
         takingDamage = false;
         //make damage a variable in both enemy and enemy data
     }
-    
 }

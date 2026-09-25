@@ -9,6 +9,7 @@ TagManager:
   - Ammo
   - Hazard
   - Enemy
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

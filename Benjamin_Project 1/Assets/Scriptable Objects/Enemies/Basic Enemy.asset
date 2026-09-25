@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15901b62f989c714caf44d8610b9b408, type: 3}
   m_Name: Basic Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  health: 3
-  maxHealth: 3
   detectionRange: 10
-  speed: 5
-  acceleration: 8
+  speed: 15
+  acceleration: 25
   angularSpeed: 90
   stoppingDistance: 1.5
   radius: 0.5
