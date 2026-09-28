@@ -5,7 +5,6 @@ public class EnemyData : ScriptableObject
 {
     //Enemy
     [Header("Enemy Stats")]
-    public int health = 3;
     public int maxHealth = 3;
     public float detectionRange = 5;
     //Weapon

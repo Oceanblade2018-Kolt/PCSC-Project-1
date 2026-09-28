@@ -84,8 +84,6 @@ MonoBehaviour:
   pistol: {fileID: 0}
   isFollowing: 0
   takingDamage: 0
-  health: 6
-  shootDistance: 0
   player: {fileID: 0}
   agent: {fileID: 3733224642162906318}
   weapon: {fileID: 6871977625283484345}
@@ -237,18 +235,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00213a1a0fda1a34bbb731a612a1b4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWeapon
+  data: {fileID: 11400000, guid: f0f69ba7867172c41a442cabb9390f11, type: 2}
   playerTransform: {fileID: 0}
   projectile: {fileID: 5223752540876739361, guid: 847344172d24c1341841b55a555285a1, type: 3}
   firePoint: {fileID: 4228121227266484573}
   firingDirection: {fileID: 4228121227266484573}
   canFire: 1
   reloading: 0
-  projLifeSpan: 1.5
-  projVelocity: 750
-  reloadCooldown: 1
-  rof: 1.5
-  clip: 100
-  clipSize: 100
 --- !u!33 &199730767200163698
 MeshFilter:
   m_ObjectHideFlags: 0

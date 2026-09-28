@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15901b62f989c714caf44d8610b9b408, type: 3}
   m_Name: Advanced Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  maxHealth: 6
   detectionRange: 50
+  projLifeSpan: 1.5
+  projVelocity: 750
+  reloadCooldown: 0
+  rof: 1.5
+  clip: 0
+  clipSize: 0
   speed: 5
   acceleration: 5
   angularSpeed: 120

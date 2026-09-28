@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     public bool isFollowing = false;
     public bool takingDamage = false;
 
+    public int health = 3;
+
+
     //[SerializeField]  private int health = 3;
     //public int maxHealth = 3;
     //public float detectionRange = 5;
@@ -21,6 +24,8 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        health = 3;
+
     }
 
     void Start()
@@ -37,11 +42,11 @@ public class Enemy : MonoBehaviour
      
     void Update()
     {
-        if (data.health <= 0)
+        if (health <= 0)
         {
             //DIE
-            Destroy(gameObject);
-
+            //Destroy(gameObject);
+            Object.Destroy(gameObject);
         }
 
 
@@ -81,36 +86,15 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "eprojectile")
+        {
+            health--;
+        }
         if (collision.gameObject.tag == "projectile")
         {
-            data.health--;
+            health -= 2;
         }
-
     }
 
 
-
-
-
-
-    //public float damage = 10f;
-
-    //// Use OnTriggerEnter2D for 2D games
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    // Check if the collided object has the "Enemy" tag
-    //    if (other.CompareTag("Enemy"))
-    //    {
-    //        // Try to find the Enemy Health script on the collided object
-    //        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-
-    //        if (enemy != null)
-    //        {
-    //            enemy.TakeDamage(damage);
-    //        }
-
-    //        // Destroy the projectile after impact
-    //        Destroy(gameObject);
-    //    }
-    //}
 }

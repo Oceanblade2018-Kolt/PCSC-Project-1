@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool touchedHazardPool = false;
     public bool touchedBasicEnemy = false;
 
+
     public int health = 5;
     public int maxHealth = 5;
     public float speed = 5.0f;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
     public Weapon currentWeapon;
     public Transform weaponSlot;
     public GameObject pickupObject;
-
 
     Ray jumpRay;
     Ray interactRay;
@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
 
         //GetComponent<Collider>().material.dynamicFriction = 1;
-
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -155,9 +154,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
         }
-
-        //rb.AddForce(Vector3.up * jumpHeight);
     }
+
+
     public void shoulderSwap()
     {
         cineCam.TargetOffset.x *= -1;

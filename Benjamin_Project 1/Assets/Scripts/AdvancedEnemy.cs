@@ -20,6 +20,7 @@ public class AdvancedEnemy : MonoBehaviour
     //[SerializeField] private int health = 3;
     private float shootDistance;
 
+    public int health = 3;
 
 
     public PlayerController player;
@@ -30,7 +31,7 @@ public class AdvancedEnemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         shootDistance = data.stoppingDistance;
-
+        health = 6;
     }
 
     void Start()
@@ -44,7 +45,7 @@ public class AdvancedEnemy : MonoBehaviour
 
     void Update()
     {
-        if (data.health <= 0)
+        if (health <= 0)
         {
             //DIE
             Destroy(pistol);
@@ -100,11 +101,11 @@ public class AdvancedEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "projectile")
         {
-            data.health -= 2;
+            health -= 2;
         }
         else if (collision.gameObject.tag == "eprojectile")
         {
-            data.health--;
+            health--;
         }
     }
 
