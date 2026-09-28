@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour
 {
+    [SerializeField] private EnemyData data;
+
     AdvancedEnemy AE;
     PlayerController player;
 
@@ -14,20 +16,22 @@ public class EnemyWeapon : MonoBehaviour
 
     public bool canFire = true;
     public bool reloading = false;
-
+    /*[Header("Weapon Stats")]
     public float projLifeSpan;
     public float projVelocity;
     public float reloadCooldown;
-    //public float shootDistance;
     public float rof = 1f;
     public int clip;
-    public int clipSize;
+    public int clipSize;*/
+    //public float shootDistance;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         firingDirection = player.transform;
+    }
+    void Start()
+    {
+        //firingDirection = player.transform;
     }
 
     // Update is called once per frame
@@ -60,8 +64,8 @@ public class EnemyWeapon : MonoBehaviour
         if (canFire == true)
         {
             GameObject p = Instantiate(projectile, firePoint.position, firePoint.rotation);
-            p.GetComponent<Rigidbody>().AddForce(firingDirection.transform.forward * projVelocity);
-            Destroy(p, projLifeSpan);
+            p.GetComponent<Rigidbody>().AddForce(firingDirection.transform.forward * data.projVelocity);
+            Destroy(p, data.projLifeSpan);
             canFire = false;
             //clip--;
             StartCoroutine("enemyCooldownFire");
@@ -72,7 +76,7 @@ public class EnemyWeapon : MonoBehaviour
 
     IEnumerator enemyCooldownFire()
     {
-        yield return new WaitForSeconds(rof);
+        yield return new WaitForSeconds(data.rof);
         canFire = true;
         //if (clip > 0)
         //{

@@ -235,6 +235,14 @@ public class PlayerController : MonoBehaviour
         {
             health--;
         }
+        if(collision.gameObject.tag == "eprojectile")
+        {
+            health -= 10;
+        }
+        if (collision.gameObject.tag == "enemy")
+        {
+            health -= 5;
+        }
     }
 
 
@@ -265,7 +273,7 @@ public class PlayerController : MonoBehaviour
     {
         takingDamage = true;
         yield return new WaitForSeconds(basicEnemyCooldown);
-        health -= (int)2;
+        health -= (int)5;
         takingDamage = false;
         //make damage a variable in both enemy and enemy data
     }

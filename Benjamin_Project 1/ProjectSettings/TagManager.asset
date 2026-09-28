@@ -10,6 +10,7 @@ TagManager:
   - Hazard
   - Enemy
   - EnemyWeapon
+  - eprojectile
   layers:
   - Default
   - TransparentFX

@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 121909401168308088}
   - component: {fileID: 564922108723190440}
-  - component: {fileID: 7286790520067207985}
   - component: {fileID: 8984110436072587549}
   - component: {fileID: 7418425627545759385}
   - component: {fileID: 5907840208234109461}
@@ -82,31 +81,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AdvancedEnemy
   data: {fileID: 11400000, guid: f0f69ba7867172c41a442cabb9390f11, type: 2}
+  pistol: {fileID: 0}
   isFollowing: 0
   takingDamage: 0
-  health: 3
+  health: 6
   shootDistance: 0
   player: {fileID: 0}
   agent: {fileID: 3733224642162906318}
   weapon: {fileID: 6871977625283484345}
---- !u!114 &7286790520067207985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5521354873030816583}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f3935d55b3d404cb8ab8bc07a55741, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  data: {fileID: 11400000, guid: f0f69ba7867172c41a442cabb9390f11, type: 2}
-  isFollowing: 0
-  takingDamage: 0
-  health: 3
-  player: {fileID: 0}
-  agent: {fileID: 3733224642162906318}
 --- !u!33 &8984110436072587549
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -256,16 +238,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWeapon
   playerTransform: {fileID: 0}
-  projectile: {fileID: 5223752540876739361, guid: 660fb7fe7ba0a234a8046f4fc41a897d, type: 3}
+  projectile: {fileID: 5223752540876739361, guid: 847344172d24c1341841b55a555285a1, type: 3}
   firePoint: {fileID: 4228121227266484573}
-  firingDirection: {fileID: 0}
+  firingDirection: {fileID: 4228121227266484573}
   canFire: 1
   reloading: 0
   projLifeSpan: 1.5
-  projVelocity: 1000
+  projVelocity: 750
   reloadCooldown: 1
-  shootDistance: 67
-  rof: 10
+  rof: 1.5
   clip: 100
   clipSize: 100
 --- !u!33 &199730767200163698
@@ -340,7 +321,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public bool isFollowing = false;
     public bool takingDamage = false;
 
-    [SerializeField]  private int health = 3;
+    //[SerializeField]  private int health = 3;
     //public int maxHealth = 3;
     //public float detectionRange = 5;
 
@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
      
     void Update()
     {
-        if (health <= 0)
+        if (data.health <= 0)
         {
             //DIE
             Destroy(gameObject);
@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "projectile")
         {
-            health--;
+            data.health--;
         }
 
     }

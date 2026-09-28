@@ -2662,14 +2662,14 @@ MonoBehaviour:
   takingDamage: 0
   touchedHazardPool: 0
   touchedBasicEnemy: 0
-  health: 5
-  maxHealth: 5
+  health: 100
+  maxHealth: 100
   speed: 15
   jumpHeight: 3
   jumpDetectionDistance: 1.1
   interactDistance: 15
   hazardPoolCooldown: 3
-  basicEnemyCooldown: 3
+  basicEnemyCooldown: 1
   currentWeapon: {fileID: 0}
   weaponSlot: {fileID: 0}
   pickupObject: {fileID: 0}

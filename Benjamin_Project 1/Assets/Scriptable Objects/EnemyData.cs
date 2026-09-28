@@ -5,10 +5,17 @@ public class EnemyData : ScriptableObject
 {
     //Enemy
     [Header("Enemy Stats")]
-    //public int health = 3;
-    //public int maxHealth = 3;
+    public int health = 3;
+    public int maxHealth = 3;
     public float detectionRange = 5;
-
+    //Weapon
+    [Header("Weapon Stats")]
+    public float projLifeSpan;
+    public float projVelocity;
+    public float reloadCooldown;
+    public float rof = 1f;
+    public int clip;
+    public int clipSize;
     //NavMeshAgent
     [Header("NavMeshAgent Stats")]
     public float speed = 3.5f;
