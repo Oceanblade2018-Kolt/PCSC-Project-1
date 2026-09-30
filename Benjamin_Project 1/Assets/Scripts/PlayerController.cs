@@ -13,15 +13,29 @@ public class PlayerController : MonoBehaviour
     public bool takingDamage = false;
     public bool touchedHazardPool = false;
     public bool touchedBasicEnemy = false;
+    public bool sprinting = false;
+    public bool canSprint = true;
+    public bool sprintStop = false;
+    public bool staminaStop = false;
+    public bool regenStamina = false;
+    public bool toggleSprint = true;
+
 
 
     public int health = 5;
     public int maxHealth = 5;
+    public float stamina = 100f;
+    public float maxStamina = 100f;
+    public float sprintCost = 0.1f;
+    public float sprintBoost = 2.0f;
     public float speed = 5.0f;
     public float jumpHeight = 10f;
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
 
+    public float sprintCooldown = 2f;
+    public float staminaRegen = 5f;
+    public float staminaCooldown = 2f;
     //public float interactDistanceDown = 6f;
 
     public float hazardPoolCooldown = 3f;
@@ -137,6 +151,80 @@ public class PlayerController : MonoBehaviour
         tempMove.x = (moveInput.x * speed);
         tempMove.z = (moveInput.y * speed);
 
+        if (sprinting)
+        {
+            if(moveInput.y == 1 && stamina > 0)
+            {
+                tempMove.z += sprintBoost;
+
+                stamina -= sprintCost * Time.deltaTime;
+                if (stamina < 0)
+                    stamina = 0;
+                StopCoroutine("staminaCD");
+
+                //if (stamina <= 0)
+                //{
+                //    canSprint = false;
+                //    StartCoroutine("sprintCD");
+                //    StartCoroutine("staminaCD");
+                //    sprinting = false;
+
+                //}
+
+            }
+            else
+            {
+                //if(toggleSprint)
+                //    sprinting = false;
+                //canSprint = false;
+                //StartCoroutine("sprintCD");
+                //StartCoroutine("staminaCD");
+                canSprint = false;
+                sprinting = false;
+            }
+
+        }
+        /*if (!sprinting)
+        {
+            if (regenStamina)
+            {
+                stamina += staminaRegen * Time.deltaTime;
+
+                if (stamina >= maxStamina)
+                {
+                    stamina = maxStamina;
+                    regenStamina = false;
+
+                }
+            }
+
+
+
+
+        }*/
+
+        if (!sprinting)
+        {
+            if (!regenStamina && !staminaStop && stamina < maxStamina)
+            {
+                StartCoroutine("staminaCD");
+            }
+            if (!canSprint && !sprintStop)
+            {
+                StartCoroutine("sprintCD");
+            }
+            if (regenStamina)
+            {
+                stamina += staminaRegen * Time.deltaTime;
+
+                if (stamina >= maxStamina)
+                {
+                    stamina = maxStamina;
+                    regenStamina = false;
+                }
+            }
+        }
+
         rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
 
         //GetComponent<Collider>().material.dynamicFriction = 1;
@@ -209,6 +297,29 @@ public class PlayerController : MonoBehaviour
             currentWeapon.unequip();
     }
 
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        if (canSprint)
+        {
+            if (toggleSprint)
+            {
+                sprinting = !sprinting;
+            }
+            else if (!toggleSprint)
+            {
+                //if (context.ReadValueAsButton() && canSprint)
+                //    sprinting = true;
+                //else
+                //    sprinting = false;
+                sprinting = context.ReadValueAsButton();
+
+                if (!sprinting)
+                    canSprint = false;
+            }
+        }
+
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ammo")
@@ -275,5 +386,21 @@ public class PlayerController : MonoBehaviour
         health -= (int)5;
         takingDamage = false;
         //make damage a variable in both enemy and enemy data
+    }
+    IEnumerator sprintCD()
+    {
+        sprintStop = true;
+        yield return new WaitForSeconds(sprintCooldown);
+
+        canSprint = true;
+        sprintStop = false;
+    }
+    IEnumerator staminaCD()
+    {
+        staminaStop = true;
+        yield return new WaitForSeconds(staminaCooldown);
+
+        regenStamina = true;
+        staminaStop = false;
     }
 }
