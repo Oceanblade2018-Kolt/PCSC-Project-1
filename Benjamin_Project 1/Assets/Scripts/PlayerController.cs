@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -320,6 +321,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void changeFireMode()
+    {
+        if (currentWeapon)
+        {
+            if(currentWeapon.fireModes >= 2)
+            {
+                if(currentWeapon.weaponID == 1)
+                {
+                    currentWeapon.GetComponent<Rifle>().changeFireMode();
+                }
+
+            }
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Ammo")
@@ -341,17 +357,21 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.tag == "Hazard")
+        if (collision.gameObject.tag == "Hazard")
         {
             health--;
         }
-        if(collision.gameObject.tag == "eprojectile")
+        if (collision.gameObject.tag == "eprojectile")
         {
             health -= 10;
         }
         if (collision.gameObject.tag == "enemy")
         {
             health -= 5;
+        }
+        if (collision.gameObject.tag == "Level End")
+        {
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

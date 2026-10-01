@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - EnemyWeapon
   - eprojectile
+  - Pause
+  - Level End
   layers:
   - Default
   - TransparentFX
