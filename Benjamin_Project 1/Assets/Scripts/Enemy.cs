@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class Enemy : MonoBehaviour
 
     public int health = 3;
 
+    //static System.Random rnd = new System.Random();
 
+    //public int randomTest;
     //[SerializeField]  private int health = 3;
     //public int maxHealth = 3;
     //public float detectionRange = 5;
@@ -46,10 +49,10 @@ public class Enemy : MonoBehaviour
         {
             //DIE
             //Destroy(gameObject);
-            Object.Destroy(gameObject);
+            UnityEngine.Object.Destroy(gameObject);
         }
-
-
+        //randomTest = rnd.Next(9);
+        //Debug.Log(randomTest);
 
         float targetDistance = Mathf.Abs(Vector3.Distance(player.transform.position, transform.position));
 

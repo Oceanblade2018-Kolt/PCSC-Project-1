@@ -27,7 +27,7 @@ public class EnemyWeapon : MonoBehaviour
 
     private void Awake()
     {
-        firingDirection = player.transform;
+        //firingDirection = player.transform;
     }
     void Start()
     {
