@@ -34,6 +34,11 @@ public class PlayerController : MonoBehaviour
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
 
+
+    //public float maxSlopeAngle = 45f;
+    //private RaycastHit groundHit;
+
+
     public float sprintCooldown = 2f;
     public float staminaRegen = 5f;
     public float staminaCooldown = 2f;
@@ -57,8 +62,7 @@ public class PlayerController : MonoBehaviour
     Ray jumpRay;
     Ray interactRay;
 
-    //Ray interactRayDown;
-    //RaycastHit interactHitDown;
+    public PhysicsMaterial physics;
 
     RaycastHit interactHit;
     Vector2 moveInput;
@@ -86,8 +90,9 @@ public class PlayerController : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        //phys = GetComponent<Collider>().material;
+        /*physics.dynamicFriction = 0;
+        physics.staticFriction = 0;
+        physics.frictionCombine = PhysicsMaterialCombine.Minimum;*/
 
 
     }
@@ -97,7 +102,26 @@ public class PlayerController : MonoBehaviour
         playerRotation.y = playerCam.transform.rotation.y;
         playerRotation.w = playerCam.transform.rotation.w;
         transform.rotation = playerRotation;
-
+        /*//Debug.Log("Before Velocity: " + rb.linearVelocity);
+        Vector3 tempMove = rb.linearVelocity;
+        tempMove.x = (moveInput.x * speed);
+        tempMove.z = (moveInput.y * speed);
+        if (rb.linearVelocity.y > 1f)
+        {
+            Debug.Log("before movement: Y= " + rb.linearVelocity.y);
+        }
+        rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
+        //Debug.Log("After Velocity: " + rb.linearVelocity);*/
+        Vector3 moveDirection = (moveInput.x * transform.right) + (moveInput.y * transform.forward);
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, jumpDetectionDistance))
+        {
+            moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+        }
+        Vector3 tempMove = rb.linearVelocity;
+        Vector3 horizontalMove = moveDirection.normalized * moveInput.magnitude * speed;
+        tempMove.x = horizontalMove.x;
+        tempMove.z = horizontalMove.z;
+        rb.linearVelocity = new Vector3(tempMove.x, tempMove.y, tempMove.z);
     }
 
     // Update is called once per frame
@@ -116,8 +140,6 @@ public class PlayerController : MonoBehaviour
         interactRay.direction = playerCam.transform.forward;
 
 
-        //interactRayDown.origin = playerCam.transform.position;
-        //interactRayDown.direction = player.transform.up;
 
         if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
@@ -147,10 +169,21 @@ public class PlayerController : MonoBehaviour
             if (currentWeapon.holdToAttack && isAttacking)
                 currentWeapon.fire();
 
-            Vector3 tempMove = rb.linearVelocity;
 
+        //bool onSlope = Physics.Raycast(transform.position, -transform.up, out groundHit, 1.1f);
+
+
+        Vector3 tempMove = rb.linearVelocity;
         tempMove.x = (moveInput.x * speed);
         tempMove.z = (moveInput.y * speed);
+
+        //Vector3 moveDirection = (tempMove.x * transform.right) + (tempMove.z * transform.forward);
+        //if (Physics.Raycast(transform.position, -transform.up, out RaycastHit slopeHit, 1.1f))
+        //{
+        //    moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+        //}
+
+
 
         if (sprinting)
         {
@@ -175,11 +208,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //if(toggleSprint)
-                //    sprinting = false;
-                //canSprint = false;
-                //StartCoroutine("sprintCD");
-                //StartCoroutine("staminaCD");
                 canSprint = false;
                 sprinting = false;
             }
@@ -226,9 +254,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
+        //rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
 
-        //GetComponent<Collider>().material.dynamicFriction = 1;
+
+        //rb.linearVelocity = moveDirection + (tempMove.y * transform.up);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -308,10 +337,10 @@ public class PlayerController : MonoBehaviour
             }
             else if (!toggleSprint)
             {
-                //if (context.ReadValueAsButton() && canSprint)
+                /*//if (context.ReadValueAsButton() && canSprint)
                 //    sprinting = true;
                 //else
-                //    sprinting = false;
+                //    sprinting = false;*/
                 sprinting = context.ReadValueAsButton();
 
                 if (!sprinting)
