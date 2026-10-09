@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool staminaStop = false;
     public bool regenStamina = false;
     public bool toggleSprint = true;
-
-
+    public bool clickJump = false;
 
     public int health = 5;
     public int maxHealth = 5;
@@ -54,10 +53,12 @@ public class PlayerController : MonoBehaviour
     Camera playerCam;
     PlayerInput PlayerInput;
     Rigidbody rb;
-
+    public GameManager gameManager;
+    //public GameManager gm;
     public Weapon currentWeapon;
     public Transform weaponSlot;
     public GameObject pickupObject;
+
 
     Ray jumpRay;
     Ray interactRay;
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
         }
         rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
         //Debug.Log("After Velocity: " + rb.linearVelocity);*/
-        Vector3 moveDirection = (moveInput.x * transform.right) + (moveInput.y * transform.forward);
+        /*Vector3 moveDirection = (moveInput.x * transform.right) + (moveInput.y * transform.forward);
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, jumpDetectionDistance))
         {
             moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
@@ -121,17 +122,12 @@ public class PlayerController : MonoBehaviour
         Vector3 horizontalMove = moveDirection.normalized * moveInput.magnitude * speed;
         tempMove.x = horizontalMove.x;
         tempMove.z = horizontalMove.z;
-        rb.linearVelocity = new Vector3(tempMove.x, tempMove.y, tempMove.z);
+        rb.linearVelocity = new Vector3(tempMove.x, tempMove.y, tempMove.z);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(health <= 0)
-        {
-
-        }
-            //die
 
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
@@ -254,10 +250,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //rb.linearVelocity = (tempMove.x * transform.right) + (tempMove.y * transform.up) + (tempMove.z * transform.forward);
 
+        rb.linearVelocity = (tempMove.x * transform.right) + ( tempMove.y * transform.up) + (tempMove.z * transform.forward);
+        
 
         //rb.linearVelocity = moveDirection + (tempMove.y * transform.up);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -268,6 +266,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        clickJump = true;
         if(Physics.Raycast(jumpRay, jumpDetectionDistance))
         {
             rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
@@ -392,7 +391,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "eprojectile")
         {
-            health -= 10;
+            health -= 20;
         }
         if (collision.gameObject.tag == "enemy")
         {
@@ -432,7 +431,7 @@ public class PlayerController : MonoBehaviour
     {
         takingDamage = true;
         yield return new WaitForSeconds(basicEnemyCooldown);
-        health -= (int)5;
+        health -= (int)15;
         takingDamage = false;
         //make damage a variable in both enemy and enemy data
     }
