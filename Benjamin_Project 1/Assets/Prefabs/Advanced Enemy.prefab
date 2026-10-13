@@ -84,6 +84,7 @@ MonoBehaviour:
   pistol: {fileID: 0}
   isFollowing: 0
   takingDamage: 0
+  health: 3
   player: {fileID: 0}
   agent: {fileID: 3733224642162906318}
   weapon: {fileID: 6871977625283484345}
@@ -120,7 +121,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6dc2cfaedbe1dc4469280dcc7254a094, type: 2}
+  - {fileID: 2100000, guid: b2f3bbd474215264d8f5b407edbe7827, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
