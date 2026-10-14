@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private EnemyData data;
+    AudioSource speaker;
+    //public AudioClip[] audioClips;
+
     //convert these to a scriptableobject for easy read and modifications
 
     //PlayerController player;
@@ -77,10 +80,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         PlayerInput = GetComponent<PlayerInput>();
         playerCam = Camera.main;
-
+        speaker = GetComponent<AudioSource>();
         //Setting up new move Vector
         moveInput = new Vector2();
-
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         jumpRay = new Ray(transform.position, -transform.up);
         interactRay = new Ray(playerCam.transform.position, playerCam.transform.forward);
 
@@ -266,10 +269,15 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        clickJump = true;
-        if(Physics.Raycast(jumpRay, jumpDetectionDistance))
+        //clickJump = true;
+        if (!gameManager.paused)
         {
-            rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+            if (Physics.Raycast(jumpRay, jumpDetectionDistance))
+            {
+                rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+                //speaker.generator = audioClip
+                speaker.Play();
+            }
         }
     }
 
