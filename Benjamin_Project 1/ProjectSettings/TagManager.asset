@@ -15,6 +15,13 @@ TagManager:
   - Level End
   - GameOver
   - Restart
+  - GameManager
+  - Maze Trigger
+  - Maze Trigger 2
+  - Maze Trigger 3
+  - Maze Trigger 4
+  - Maze Trigger 5
+  - Maze 2
   layers:
   - Default
   - TransparentFX

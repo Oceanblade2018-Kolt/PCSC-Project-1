@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 public class GameManager : MonoBehaviour
 {
     public PlayerController player;
@@ -25,7 +26,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-
         if(SceneManager.GetActiveScene().buildIndex != 0)
         {
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        
 
     }
 

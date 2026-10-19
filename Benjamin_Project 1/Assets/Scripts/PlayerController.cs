@@ -10,9 +10,6 @@ public class PlayerController : MonoBehaviour
     AudioSource speaker;
     //public AudioClip[] audioClips;
 
-    //convert these to a scriptableobject for easy read and modifications
-
-    //PlayerController player;
     public bool isAttacking = false;
     public bool takingDamage = false;
     public bool touchedHazardPool = false;
@@ -36,21 +33,20 @@ public class PlayerController : MonoBehaviour
     public float jumpDetectionDistance = 1.1f;
     public float interactDistance = 6f;
 
-
-    //public float maxSlopeAngle = 45f;
-    //private RaycastHit groundHit;
+    public GameObject firstMaze;
+    public GameObject secondMaze;
+    public GameObject thirdMaze;
+    public GameObject fourthMaze;
+    public GameObject fifthMaze;
+    public GameObject sixthMaze;
 
 
     public float sprintCooldown = 2f;
     public float staminaRegen = 5f;
     public float staminaCooldown = 2f;
-    //public float interactDistanceDown = 6f;
 
     public float hazardPoolCooldown = 3f;
     public float basicEnemyCooldown = 0.5f;
-
-    //public float dynamicPhysics;
-    //GetComponent<collider>().PhysicsMaterial.
 
     CinemachinePositionComposer cineCam;
     Camera playerCam;
@@ -169,18 +165,13 @@ public class PlayerController : MonoBehaviour
                 currentWeapon.fire();
 
 
-        //bool onSlope = Physics.Raycast(transform.position, -transform.up, out groundHit, 1.1f);
 
 
         Vector3 tempMove = rb.linearVelocity;
         tempMove.x = (moveInput.x * speed);
         tempMove.z = (moveInput.y * speed);
 
-        //Vector3 moveDirection = (tempMove.x * transform.right) + (tempMove.z * transform.forward);
-        //if (Physics.Raycast(transform.position, -transform.up, out RaycastHit slopeHit, 1.1f))
-        //{
-        //    moveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
-        //}
+
 
 
 
@@ -195,14 +186,6 @@ public class PlayerController : MonoBehaviour
                     stamina = 0;
                 StopCoroutine("staminaCD");
 
-                //if (stamina <= 0)
-                //{
-                //    canSprint = false;
-                //    StartCoroutine("sprintCD");
-                //    StartCoroutine("staminaCD");
-                //    sprinting = false;
-
-                //}
 
             }
             else
@@ -212,24 +195,6 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        /*if (!sprinting)
-        {
-            if (regenStamina)
-            {
-                stamina += staminaRegen * Time.deltaTime;
-
-                if (stamina >= maxStamina)
-                {
-                    stamina = maxStamina;
-                    regenStamina = false;
-
-                }
-            }
-
-
-
-
-        }*/
 
         if (!sprinting)
         {
@@ -257,7 +222,6 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = (tempMove.x * transform.right) + ( tempMove.y * transform.up) + (tempMove.z * transform.forward);
         
 
-        //rb.linearVelocity = moveDirection + (tempMove.y * transform.up);
         Debug.Log(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -269,13 +233,11 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        //clickJump = true;
         if (!gameManager.paused)
         {
             if (Physics.Raycast(jumpRay, jumpDetectionDistance))
             {
                 rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
-                //speaker.generator = audioClip
                 speaker.Play();
             }
         }
@@ -344,10 +306,6 @@ public class PlayerController : MonoBehaviour
             }
             else if (!toggleSprint)
             {
-                /*//if (context.ReadValueAsButton() && canSprint)
-                //    sprinting = true;
-                //else
-                //    sprinting = false;*/
                 sprinting = context.ReadValueAsButton();
 
                 if (!sprinting)
@@ -409,6 +367,34 @@ public class PlayerController : MonoBehaviour
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
         }
+
+        //Maze Trigger Collisions
+        if (collision.gameObject.tag == "Maze Trigger")
+        {
+            Debug.Log("this is working");
+            firstMaze.SetActive(false);
+            secondMaze.SetActive(true);
+        }
+        if (collision.gameObject.tag == "Maze Trigger 2")
+        {
+            secondMaze.SetActive(false);
+            thirdMaze.SetActive(true);
+        }
+        if (collision.gameObject.tag == "Maze Trigger 3")
+        {
+            thirdMaze.SetActive(false);
+            fourthMaze.SetActive(true);
+        }
+        if (collision.gameObject.tag == "Maze Trigger 4")
+        {
+            fourthMaze.SetActive(false);
+            fifthMaze.SetActive(true);
+        }
+        if (collision.gameObject.tag == "Maze Trigger 5")
+        {
+            fifthMaze.SetActive(false);
+            sixthMaze.SetActive(true);
+        }
     }
 
 
@@ -441,7 +427,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(basicEnemyCooldown);
         health -= (int)15;
         takingDamage = false;
-        //make damage a variable in both enemy and enemy data
     }
     IEnumerator sprintCD()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15901b62f989c714caf44d8610b9b408, type: 3}
   m_Name: Basic Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  maxHealth: 3
+  maxHealth: 9
   detectionRange: 10
   projLifeSpan: 0
   projVelocity: 0
@@ -23,6 +23,6 @@ MonoBehaviour:
   speed: 15
   acceleration: 25
   angularSpeed: 90
-  stoppingDistance: 1.5
+  stoppingDistance: 1
   radius: 0.5
   height: 2
