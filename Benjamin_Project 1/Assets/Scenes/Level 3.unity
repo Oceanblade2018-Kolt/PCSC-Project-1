@@ -13612,6 +13612,7 @@ MonoBehaviour:
   ammoText: {fileID: 0}
   healthBar: {fileID: 0}
   restart: {fileID: 0}
+  crosshair: {fileID: 1971522718}
   paused: 0
   gameOver: 0
   deadified: 0

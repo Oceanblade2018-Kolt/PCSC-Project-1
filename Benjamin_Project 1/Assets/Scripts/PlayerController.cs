@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool regenStamina = false;
     public bool toggleSprint = true;
     public bool clickJump = false;
+    public bool holdingWeapon = false;
 
     public int health = 5;
     public int maxHealth = 5;
@@ -122,6 +123,10 @@ public class PlayerController : MonoBehaviour
         tempMove.x = horizontalMove.x;
         tempMove.z = horizontalMove.z;
         rb.linearVelocity = new Vector3(tempMove.x, tempMove.y, tempMove.z);*/
+        if (!Physics.Raycast(interactRay, out interactHit, interactDistance))
+        {
+            pickupObject = null;
+        }
     }
 
     // Update is called once per frame
@@ -144,8 +149,11 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-        
+        {
             pickupObject = null;
+        }
+        
+
 
         /*
         if (Physics.Raycast(interactRayDown, out interactHitDown, interactDistanceDown))
@@ -276,9 +284,10 @@ public class PlayerController : MonoBehaviour
         {
             if (pickupObject)
             {
-                if (pickupObject.tag == "Weapon")
+                if (pickupObject.tag == "Weapon" && !holdingWeapon)
                 {
                     pickupObject.GetComponent<Weapon>().equip(this);
+                    holdingWeapon = true;
                 }
 
 
@@ -293,7 +302,11 @@ public class PlayerController : MonoBehaviour
     public void DropWeapon()
     {
         if (currentWeapon)
+        {
             currentWeapon.unequip();
+            holdingWeapon = false;
+        }
+
     }
 
     public void Sprint(InputAction.CallbackContext context)
