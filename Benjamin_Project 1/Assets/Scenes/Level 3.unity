@@ -5255,8 +5255,9 @@ GameObject:
   m_Component:
   - component: {fileID: 478727234}
   - component: {fileID: 478727233}
-  - component: {fileID: 478727237}
+  - component: {fileID: 478727238}
   - component: {fileID: 478727236}
+  - component: {fileID: 478727237}
   - component: {fileID: 478727235}
   m_Layer: 0
   m_Name: CinemachineCamera
@@ -5317,7 +5318,7 @@ Transform:
   m_GameObject: {fileID: 478727231}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.98064, y: -7.84132, z: 43.6}
+  m_LocalPosition: {x: 13.48064, y: -7.16632, z: 48.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5407,28 +5408,55 @@ MonoBehaviour:
   m_GameObject: {fileID: 478727231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
+  m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
-  CameraDistance: 5
-  DeadZoneDepth: 0
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDeoccluder
+  CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  IgnoreTag: Player
+  TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  MinimumDistanceFromTarget: 0.75
+  AvoidObstacles:
+    Enabled: 1
+    DistanceLimit: 0
+    MinimumOcclusionTime: 0
+    CameraRadius: 0.2
+    UseFollowTarget:
       Enabled: 0
-      Size: {x: 0.2, y: 0.2}
-    HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 1, y: 0.575, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
-  Lookahead:
+      YOffset: 0
+    Strategy: 0
+    MaximumEffort: 1
+    SmoothingTime: 0
+    Damping: 0.3
+    DampingWhenOccluded: 0.1
+  ShotQualityEvaluation:
     Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 0
+    OptimalDistance: 10
+    NearLimit: 5
+    FarLimit: 30
+    MaxQualityBoost: 0.2
+--- !u!114 &478727238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478727231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
+  TrackerSettings:
+    BindingMode: 3
+    PositionDamping: {x: 0.85, y: 0.85, z: 0.85}
+    AngularDampingMode: 0
+    RotationDamping: {x: 0.85, y: 0.85, z: 0.85}
+    QuaternionDamping: 1
+  FollowOffset: {x: 1, y: 1.25, z: -3.5}
 --- !u!1001 &491961143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5440,10 +5468,6 @@ PrefabInstance:
     - target: {fileID: 5377810120807302541, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
       propertyPath: m_Name
       value: Maze Trigger
-      objectReference: {fileID: 0}
-    - target: {fileID: 5377810120807302541, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
-      propertyPath: m_TagString
-      value: Maze Trigger 2
       objectReference: {fileID: 0}
     - target: {fileID: 9154387742739224567, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19595,7 +19619,7 @@ Transform:
   m_GameObject: {fileID: 1823688464}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.98064, y: -7.84132, z: 43.6}
+  m_LocalPosition: {x: 13.48064, y: -7.16632, z: 48.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22971,6 +22995,10 @@ PrefabInstance:
     - target: {fileID: 5377810120807302541, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
       propertyPath: m_Name
       value: First
+      objectReference: {fileID: 0}
+    - target: {fileID: 5377810120807302541, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
+      propertyPath: m_TagString
+      value: Maze Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 9154387742739224567, guid: 205f1cbf2182b754aa314952e9320c8d, type: 3}
       propertyPath: m_LocalPosition.x

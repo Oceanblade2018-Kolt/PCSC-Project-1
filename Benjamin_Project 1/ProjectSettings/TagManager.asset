@@ -22,6 +22,10 @@ TagManager:
   - Maze Trigger 4
   - Maze Trigger 5
   - Maze 2
+  - Maze 6
+  - Maze 4
+  - Maze 3
+  - Maze 5
   layers:
   - Default
   - TransparentFX
@@ -30,7 +34,7 @@ TagManager:
   - Water
   - UI
   - Walls
-  - 
+  - Maze Triggers
   - 
   - 
   - 

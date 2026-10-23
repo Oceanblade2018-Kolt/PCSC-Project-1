@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2886640574758458454}
   - component: {fileID: 3470518196887336528}
   - component: {fileID: 6280036950914498844}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Maze Trigger
-  m_TagString: Maze Trigger
+  m_TagString: Maze Trigger 2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
