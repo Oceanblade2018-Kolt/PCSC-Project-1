@@ -3039,7 +3039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &939925639
 Transform:
   m_ObjectHideFlags: 0
@@ -3993,6 +3993,7 @@ MonoBehaviour:
   regenStamina: 0
   toggleSprint: 0
   clickJump: 0
+  holdingWeapon: 0
   health: 100
   maxHealth: 100
   stamina: 100

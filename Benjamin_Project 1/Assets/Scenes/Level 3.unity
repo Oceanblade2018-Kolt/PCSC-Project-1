@@ -13124,6 +13124,7 @@ MonoBehaviour:
   regenStamina: 0
   toggleSprint: 0
   clickJump: 0
+  holdingWeapon: 0
   health: 100
   maxHealth: 100
   stamina: 100

@@ -123,10 +123,10 @@ public class PlayerController : MonoBehaviour
         tempMove.x = horizontalMove.x;
         tempMove.z = horizontalMove.z;
         rb.linearVelocity = new Vector3(tempMove.x, tempMove.y, tempMove.z);*/
-        if (!Physics.Raycast(interactRay, out interactHit, interactDistance))
+/*        if (!Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
             pickupObject = null;
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
+            pickupObject = null;
             if (interactHit.collider.tag == "Weapon")
             {
                 pickupObject = interactHit.collider.gameObject;
@@ -305,6 +306,7 @@ public class PlayerController : MonoBehaviour
         {
             currentWeapon.unequip();
             holdingWeapon = false;
+            //pickupObject = null;
         }
 
     }
