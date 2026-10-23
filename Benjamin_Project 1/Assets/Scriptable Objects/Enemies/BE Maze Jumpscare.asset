@@ -23,6 +23,6 @@ MonoBehaviour:
   speed: 18
   acceleration: 30
   angularSpeed: 90
-  stoppingDistance: 1
+  stoppingDistance: 1.5
   radius: 0.5
   height: 2
