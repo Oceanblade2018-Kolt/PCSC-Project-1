@@ -2915,7 +2915,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.083333336
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c7068c0f9cffc374f9ceb5f03e92c132, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0f244ee9612049446b94da5032d5f9b7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &839243833
 Transform:
@@ -4475,6 +4475,7 @@ MonoBehaviour:
   regenStamina: 0
   toggleSprint: 0
   clickJump: 0
+  holdingWeapon: 0
   health: 100
   maxHealth: 100
   stamina: 100

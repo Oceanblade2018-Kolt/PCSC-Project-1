@@ -116,7 +116,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                crosshair.SetActive(true);
+                if (!paused)
+                    crosshair.SetActive(true);
                 weaponName.text = "";
                 clipText.text = "";
                 ammoText.text = "";
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
+            crosshair.SetActive(false);
         }
         else
         {
