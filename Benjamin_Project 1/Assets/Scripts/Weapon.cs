@@ -31,11 +31,13 @@ public class Weapon : MonoBehaviour
     public int maxAmmo;
     public int ammoRefill;
 
+
+    GameObject pistol;
     void Start()
     {
         //firePoint = transform.GetChild(0);
         firingDirection = Camera.main;
-        
+        pistol = GameObject.Find("Pistol");
 
     }
 
