@@ -34,7 +34,7 @@ public class AdvancedEnemy : MonoBehaviour
         health = 6;
     }
 
-    void Start()
+    void Start() 
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
@@ -50,6 +50,7 @@ public class AdvancedEnemy : MonoBehaviour
             //DIE
             Destroy(pistol);
             Destroy(gameObject);
+            GameObject.Find("GameManager").GetComponent<GameManager>().enemyCount--;
         }
 
         float targetDistance = Mathf.Abs(Vector3.Distance(player.transform.position, transform.position));

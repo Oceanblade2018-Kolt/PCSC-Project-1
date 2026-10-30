@@ -4241,7 +4241,8 @@ MonoBehaviour:
   regenStamina: 0
   toggleSprint: 0
   clickJump: 0
-  health: 5
+  holdingWeapon: 0
+  health: 100
   maxHealth: 100
   stamina: 100
   maxStamina: 100
@@ -4426,6 +4427,7 @@ MonoBehaviour:
   player: {fileID: 0}
   PauseMenu: {fileID: 0}
   GameOver: {fileID: 0}
+  LevelEnd: {fileID: 0}
   weaponName: {fileID: 0}
   clipText: {fileID: 0}
   ammoText: {fileID: 0}
@@ -4437,6 +4439,8 @@ MonoBehaviour:
   deadified: 0
   mainMenuClicked: 0
   currentLevel: 1
+  enemiesGone: 0
+  enemyCount: 0
 --- !u!1 &1300249425
 GameObject:
   m_ObjectHideFlags: 0

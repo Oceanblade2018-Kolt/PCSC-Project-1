@@ -48,9 +48,9 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            //DIE
-            //Destroy(gameObject);
+            GameObject.Find("GameManager").GetComponent<GameManager>().enemyCount--;
             UnityEngine.Object.Destroy(gameObject);
+
         }
         //randomTest = rnd.Next(9);
         //Debug.Log(randomTest);

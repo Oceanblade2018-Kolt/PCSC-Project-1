@@ -3,12 +3,14 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using NUnit.Framework.Internal;
 public class GameManager : MonoBehaviour
 {
     public PlayerController player;
 
     public GameObject PauseMenu;
     public GameObject GameOver;
+    public GameObject LevelEnd;
 
     public TextMeshProUGUI weaponName;
     public TextMeshProUGUI clipText;
@@ -24,17 +26,22 @@ public class GameManager : MonoBehaviour
     public bool mainMenuClicked = false;
     public int currentLevel = 1;
 
+    public bool enemiesGone = false;
+    public int enemyCount = 0;
+
 
     void Start()
     {
         Time.timeScale = 1;
         if(SceneManager.GetActiveScene().buildIndex != 0)
         {
+
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
             PauseMenu = GameObject.FindGameObjectWithTag("Pause");
             GameOver = GameObject.FindGameObjectWithTag("GameOver");
-            
+            LevelEnd = GameObject.FindGameObjectWithTag("Level End");
+
             weaponName = GameObject.Find("Weapon Name").GetComponentInParent<TextMeshProUGUI>();
             clipText = GameObject.Find("Ammo").GetComponentInParent<TextMeshProUGUI>();
             ammoText = GameObject.Find("Mag").GetComponentInParent<TextMeshProUGUI>();
@@ -46,6 +53,8 @@ public class GameManager : MonoBehaviour
 
             PauseMenu.SetActive(false);
             GameOver.SetActive(false);
+
+            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
 
 
@@ -122,6 +131,22 @@ public class GameManager : MonoBehaviour
                 clipText.text = "";
                 ammoText.text = "";
             }
+            if (enemyCount <= 0)
+            {
+                enemiesGone = true;
+            }
+            if (SceneManager.GetActiveScene().buildIndex != 4 && SceneManager.GetActiveScene().buildIndex != 1)
+            {
+                if (enemiesGone)
+                {
+                    LevelEnd.SetActive(true);
+                }
+                else if (!enemiesGone)
+                {
+                    LevelEnd.SetActive(false);
+                }
+            }
+
         }
 
         

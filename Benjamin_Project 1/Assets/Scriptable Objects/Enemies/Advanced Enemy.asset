@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Advanced Enemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   maxHealth: 6
-  detectionRange: 50
+  detectionRange: 40
   projLifeSpan: 1.5
   projVelocity: 750
   reloadCooldown: 0
@@ -23,6 +23,6 @@ MonoBehaviour:
   speed: 5
   acceleration: 5
   angularSpeed: 120
-  stoppingDistance: 25
+  stoppingDistance: 20
   radius: 0.5
   height: 2
